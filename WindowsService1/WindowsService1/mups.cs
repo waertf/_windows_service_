@@ -15,6 +15,7 @@ namespace WindowsService1
         System.Diagnostics.EventLog eventLog1 = new EventLog();
         readonly string source_name = ConfigurationManager.AppSettings["source_name"].ToString();
         readonly string log_name = ConfigurationManager.AppSettings["log_name"].ToString();
+        Process myProcess = new Process();
         public mups()
         {
             InitializeComponent();
@@ -31,11 +32,16 @@ namespace WindowsService1
         protected override void OnStart(string[] args)
         {
             eventLog1.WriteEntry("In OnStart");
+            
+            myProcess.StartInfo.FileName = @ConfigurationManager.AppSettings["mups_application_path"].ToString() +
+                "\\" + ConfigurationManager.AppSettings["mups_application_name"].ToString();
+            myProcess.Start();
         }
 
         protected override void OnStop()
         {
             eventLog1.WriteEntry("In onStop.");
+            myProcess.Kill();
         }
 
         protected override void OnContinue()
