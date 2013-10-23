@@ -1,6 +1,6 @@
 ﻿namespace WindowsService1
 {
-    partial class Service1
+    partial class mups
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            // 
+            // mups
+            // 
+            this.ServiceName = "mups";
+
         }
 
         #endregion
