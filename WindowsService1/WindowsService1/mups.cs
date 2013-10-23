@@ -7,22 +7,18 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Configuration;
-using System.Reflection;
 
 namespace WindowsService1
 {
     public partial class mups : ServiceBase
     {
         System.Diagnostics.EventLog eventLog1 = new EventLog();
-         string source_name=string.Empty ;
-         string log_name=string.Empty ;
+        readonly string source_name = ConfigurationManager.AppSettings["source_name"].ToString();
+        readonly string log_name = ConfigurationManager.AppSettings["log_name"].ToString();
         public mups()
         {
             InitializeComponent();
-            string assemblyPath = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
-            Configuration cfg = ConfigurationManager.OpenExeConfiguration(assemblyPath);
-            source_name = cfg.AppSettings.Settings["source_name"].Value;
-            log_name = cfg.AppSettings.Settings["log_name"].Value;
+
             if (!System.Diagnostics.EventLog.SourceExists(source_name))
             {
                 System.Diagnostics.EventLog.CreateEventSource(
@@ -34,7 +30,6 @@ namespace WindowsService1
 
         protected override void OnStart(string[] args)
         {
-            //Debugger.Launch();
             eventLog1.WriteEntry("In OnStart");
         }
 
